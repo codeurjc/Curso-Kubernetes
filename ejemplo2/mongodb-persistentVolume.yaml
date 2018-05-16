@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deploy
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: python-mongo
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: python-mongo
+    spec:
+      containers:
+      - name: python-mongo
+        image: mongo
+        ports:
+        - containerPort: 27017
+        volumeMounts: 
+          - name: pv0001
+            mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: pv0001
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 30Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+  labels:
+    app: python-mongo
+spec:
+  ports:
+    - port: 27017
+      protocol: TCP
+      name: mongo-port
+  selector:
+    app: python-mongo
+  type: ClusterIP
