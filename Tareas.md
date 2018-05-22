@@ -25,7 +25,121 @@ Es una aplicación bastante simple que mete en un contenedor docker un código P
 ## Formatos: CloudFormation (heptio), EKS, otros?
 
 - kops
+
+Para desplegar Kubernetes en AWS utilizamos la herramienta Kops. Es la oficial de Kubernetes para el despliegue, esperemos que el lanzamiento de EKS no afecte al funcionamiento.
+
+Para el despliegue seguimos la guía:
+
+https://github.com/kubernetes/kops/blob/master/docs/aws.md
+
+Primero hemos creado el IAM con los permisos adecuados para operar el cluster.
+
+Hemos utilizado el escenario 3, ya que tenemos el dominio en un proveedor externo y hemos creado un subdominio especifico para Kubernetes.
+
+Exportamos la variables de entorno necesarias para el despliegue:
+
+```
+export NAME=cluster.k8s.codeurjc.es
+export KOPS_STATE_STORE=s3://kubernetes-state-codeurjc
+export AWS_PROFILE=kops
+```
+
+Tenemos la opción de desplegar en un VPC expuesta, lo único que evitará que los servicios estén abiertos será el grupo de seguridad:
+
+```
+kops create cluster \
+  --associate-public-ip=true \
+  --cloud=aws \
+  --bastion=false \
+  --dns-zone=k8s.codeurjc.es \
+  --master-count 1 \
+  --master-size=t2.medium \
+  --master-volume-size=60 \
+  --master-zones=eu-west-1a,eu-west-1b,eu-west-1c \
+  --network-cidr=10.230.0.0/16 \
+  --networking=calico \
+  --node-count=3 \
+  --node-size=t2.large \
+  --node-volume-size=12 \
+  --target=direct \
+  --topology=public \
+  --zones=eu-west-1a,eu-west-1b,eu-west-1c \
+  --ssh-public-key=~/.ssh/id_rsa.pub \
+  --name=$NAME \
+  --state=$KOPS_STATE_STORE \
+  --yes
+```
+
+O en un red aislada de internet por lo que el acceso será a traves de un bastión SSH.
+
+```
+kops create cluster \
+  --associate-public-ip=false \
+  --cloud=aws \
+  --bastion=true \
+  --dns-zone=k8s.codeurjc.es \
+  --master-count 1 \
+  --master-size=t2.medium \
+  --master-volume-size=60 \
+  --master-zones=eu-west-1a \
+  --network-cidr=10.230.0.0/16 \
+  --networking=calico \
+  --node-count=2 \
+  --node-size=t2.large \
+  --node-volume-size=12 \
+  --target=direct \
+  --topology=private \
+  --zones=eu-west-1a,eu-west-1b,eu-west-1c \
+  --ssh-public-key=~/.ssh/id_rsa.pub \
+  --name=$NAME \
+  --state=$KOPS_STATE_STORE \
+  --yes
+```
+
+El despliegue en ambos casos tarda unos minutos, cuando esté listo veremos que la verificación es OK:
+
+`kops validate cluster $NAME`
+
+Ya podemos empezar a operar nuestro cluster con `kubectl`
+
+`kubectl get nodes`
+
+Para eliminar el cluster:
+
+` kops delete cluster $NAME --yes`
+
 - heptio
+
+Heptio es proporcionado por AWS para desplegar Kubernetes usando CloudFormation.
+
+Para desplegarlos consultamos la documentación aquí:
+
+https://s3.amazonaws.com/quickstart-reference/heptio/latest/doc/heptio-kubernetes-on-the-aws-cloud.pdf
+
+Podemos usar el siguiente comando para desplegarlo desde la consola:
+
+En una VPC que ya exite:
+
+```
+aws cloudformation create-stack \
+  --stack-name heption-kubernetes \
+  --template-url https://s3-eu-west-1.amazonaws.com/heptio-k8s/Heptio-CF.yaml \
+  --parameters '[{"ParameterKey":"VPCID","ParameterValue":"vpc-6bf6a10f"}, {"ParameterKey":"AvailabilityZone","ParameterValue":"eu-west-1a"}, {"ParameterKey":"InstanceType","ParameterValue":"t2.small"}, {"ParameterKey":"DiskSizeGb","ParameterValue":"40"}, {"ParameterKey":"ClusterSubnetId","ParameterValue":"subnet-f1ed81a9"}, {"ParameterKey":"LoadBalancerSubnetId","ParameterValue":"subnet-f1ed81a9"}, {"ParameterKey":"LoadBalancerType","ParameterValue":"internet-facing"}, {"ParameterKey":"SSHLocation","ParameterValue":"0.0.0.0/0"}, {"ParameterKey":"ApiLbLocation","ParameterValue":"0.0.0.0/0"}, {"ParameterKey":"KeyName","ParameterValue":"nordri-aws-urjc"}, {"ParameterKey":"K8sNodeCapacity","ParameterValue":"3"}, {"ParameterKey":"NetworkingProvider","ParameterValue":"calico"}, {"ParameterKey":"ClusterDNSProvider","ParameterValue":"CoreDNS"}, {"ParameterKey":"QSS3BucketName","ParameterValue":"aws-quickstart"}, {"ParameterKey":"QSS3KeyPrefix","ParameterValue":"quickstart-heptio/"},{"ParameterKey":"ClusterAssociation", "ParameterValue":"urjc"} ]' \
+  --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
+  --profile naeva
+```
+
+Crear una VPC específica para Kubernetes:
+
+```
+aws cloudformation create-stack \
+  --stack-name heption-kubernetes \
+  --template-url https://s3-eu-west-1.amazonaws.com/heptio-k8s/Heptio-CF-NewVPC.yaml \
+  --parameters '[{"ParameterKey":"AvailabilityZone","ParameterValue":"eu-west-1a"}, {"ParameterKey":"AdminIngressLocation","ParameterValue":"0.0.0.0/0"}, {"ParameterKey":"KeyName","ParameterValue":"nordri-aws-urjc"}, {"ParameterKey":"ClusterDNSProvider","ParameterValue":"CoreDNS"}, {"ParameterKey":"NetworkingProvider","ParameterValue":"calico"}, {"ParameterKey":"K8sNodeCapacity","ParameterValue":"3"}, {"ParameterKey":"InstanceType","ParameterValue":"m4.large"}, {"ParameterKey":"DiskSizeGb","ParameterValue":"40"}, {"ParameterKey":"BastionInstanceType","ParameterValue":"t2.micro"}, {"ParameterKey":"QSS3BucketName","ParameterValue":"aws-quickstart"}, {"ParameterKey":"QSS3KeyPrefix","ParameterValue":"quickstart-heptio/"} ]' \
+  --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
+  --profile naeva
+```
+
 - kubeadm
 
 ## Kubernetes en Cloud
@@ -88,4 +202,12 @@ Hay un kubectl cordon $NODE que marca el nodo como en mantenimiento pero no lo e
 
 	- Crear roles y asignar a los usuarios o grupos
 	- El permisos puede ser para un namespace espcifico o para todos
-	
+
+## Ingress
+
+Para desplegar Ingress seguimos la guía:
+
+https://github.com/kubernetes/ingress-nginx/blob/master/docs/deploy/index.md
+
+Si estamos usando RBAC
+
