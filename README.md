@@ -104,3 +104,57 @@ Si hemos cambiado la contraseña, editar el _yaml_ y actualizar el parámetro.
 7. Podemos escalar el front python de la aplicación
 
 `kubectl scale deployment python-mongo-deploy --replicas=3`
+
+## Ejemplo 3
+
+En este ejemplo veremos como desplegar una base de datos Postgres contra una aplicación SpringBoot.
+
+*Nota*: Esta aplicación funciona igual en minikube y AWS.
+
+1. Comenzamos desplegando la base de datos:
+
+`kubectl create -f postgres.yml`
+
+2. Crear un config map con _hostname_ de Postgress:
+
+`kubectl create configmap hostname-config --from-literal=postgres_host=$(kubectl get svc postgres -o jsonpath="{.spec.clusterIP}")`
+
+3. Creamos la aplicación SpringBoot
+
+`kubectl create -f specs/spring-boot-app.yml`
+
+4. Si estamos en *minikube* podemos acceder al servicio:
+
+`minikube service spring-boot-postgres-sample`
+
+que nos abrirá un navegador web con la página.
+
+5. En cambio si estamos en AWS debemos acceder a través del load balancer. 
+
+`kubectl describe service/spring-boot-postgres-sample`
+
+donde veremos:
+
+```
+Name:                     spring-boot-postgres-sample
+Namespace:                default
+Labels:                   app=spring-boot-postgres-sample
+Annotations:              <none>
+Selector:                 app=spring-boot-postgres-sample
+Type:                     LoadBalancer
+IP:                       10.109.206.92
+LoadBalancer Ingress:     ac433f0d95dac11e8a3430a3fbd5fbd3-1384713647.eu-west-1.elb.amazonaws.com
+Port:                     <unset>  8080/TCP
+TargetPort:               8080/TCP
+NodePort:                 <unset>  32542/TCP
+Endpoints:                172.17.0.10:8080,172.17.0.7:8080,172.17.0.9:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+  Type    Reason                Age   From                Message
+  ----    ------                ----  ----                -------
+  Normal  EnsuringLoadBalancer  1m    service-controller  Ensuring load balancer
+  Normal  EnsuredLoadBalancer   1m    service-controller  Ensured load balancer
+```
+
+Accederemos al servicio a través de la url del campo _LoadBalancer Ingress_
