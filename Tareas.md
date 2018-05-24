@@ -55,7 +55,7 @@ kops create cluster \
   --master-count 1 \
   --master-size=t2.medium \
   --master-volume-size=60 \
-  --master-zones=eu-west-1a,eu-west-1b,eu-west-1c \
+  --master-zones=eu-west-1a \
   --network-cidr=10.230.0.0/16 \
   --networking=calico \
   --node-count=3 \
