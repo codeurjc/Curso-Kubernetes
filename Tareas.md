@@ -180,6 +180,10 @@ Hay un kubectl cordon $NODE que marca el nodo como en mantenimiento pero no lo e
 - https://hub.docker.com/r/hazelcast/hazelcast-kubernetes/
 - https://github.com/hazelcast/hazelcast-docker/blob/master/hazelcast-kubernetes/README.md
 
+He trabajado con la sample app de Pablo para Squirrel Drey y esta documentado aquí:                                 
+
+https://github.com/codeurjc/SquirrelDrey/tree/master/squirrel-drey-kubernetes
+
 * FullTeaching
 
 # Misc
