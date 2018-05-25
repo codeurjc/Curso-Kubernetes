@@ -45,7 +45,7 @@ metadata:
       app: webgatos
 spec:
   rules:
-  - host: webgatos.k8s.openvidu.io
+  - host: webgatos.k8s.codeurjc.es
     http:
       paths:
       - backend:

@@ -44,7 +44,7 @@ metadata:
       app: python-mongo
 spec:
   rules:
-  - host: python-mongo.k8s.openvidu.io
+  - host: python-mongo.k8s.codeurjc.es
     http:
       paths:
       - backend:
