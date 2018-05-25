@@ -52,7 +52,7 @@ kops create cluster \
   --cloud=aws \
   --bastion=false \
   --dns-zone=k8s.codeurjc.es \
-  --master-count 1 \
+  --master-count=1 \
   --master-size=t2.medium \
   --master-volume-size=60 \
   --master-zones=eu-west-1a \
@@ -78,7 +78,7 @@ kops create cluster \
   --cloud=aws \
   --bastion=true \
   --dns-zone=k8s.codeurjc.es \
-  --master-count 1 \
+  --master-count=1 \
   --master-size=t2.medium \
   --master-volume-size=60 \
   --master-zones=eu-west-1a \
