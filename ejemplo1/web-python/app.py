@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import random
+import socket
 
 app = Flask(__name__)
 
@@ -23,7 +24,21 @@ images = [
 @app.route('/')
 def index():
     url = random.choice(images)
-    return render_template('index.html', url=url)
+    ip = get_ip();
+    return render_template('index.html', url=url, ip=ip)
+
+def get_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.255.255.255', 1))
+        IP = s.getsockname()[0]
+    except:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
+
