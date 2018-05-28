@@ -37,12 +37,12 @@ Ejecutar estas líneas para otorgar autorización a Helm
 
 ## Vamos a desplegar Dokuwiki por ejemplo
 
-`$ helm install stable/dokuwiki`
+`$ helm install --name my-wiki stable/dokuwiki`
 
 Para acceder al servicio observamos el valor de `LoadBalancer Ingress` cuando ejecutamos:
 
-`$ kubectl describe service/$(tille list | tail -n1 | awk '{ print $1 }')`
+`$ kubectl describe service/my-wiki`
 
 ## Cuando hayamos acabado
 
-`$ helm delete $(tille list | tail -n1 | awk '{ print $1 }')`
+`$ helm delete my-wiki`
