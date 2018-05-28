@@ -41,7 +41,7 @@ Ejecutar estas líneas para otorgar autorización a Helm
 
 Para acceder al servicio observamos el valor de `LoadBalancer Ingress` cuando ejecutamos:
 
-`$ kubectl describe service/my-wiki`
+`$ kubectl describe service/my-wiki-dokuwiki`
 
 ## Cuando hayamos acabado
 

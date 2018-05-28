@@ -1,0 +1,11 @@
+web:
+  build: .
+  ports:
+    - "8080:8080"
+  links:
+    - db
+db:
+  environment:
+    - MYSQL_ROOT_PASSWORD=pass
+    - MYSQL_DATABASE=test
+  image: mysql

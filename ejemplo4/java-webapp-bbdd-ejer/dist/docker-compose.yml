@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+ web:
+   image: codeurjc/testingweb
+   expose:
+     - "8080"
+   links:
+     - db
+ db:
+   environment:
+     - MYSQL_ROOT_PASSWORD=pass
+     - MYSQL_DATABASE=test
+   image: mysql

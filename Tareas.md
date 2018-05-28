@@ -84,12 +84,12 @@ kops create cluster \
   --master-zones=eu-west-1a \
   --network-cidr=10.230.0.0/16 \
   --networking=calico \
-  --node-count=2 \
-  --node-size=t2.large \
+  --node-count=3 \
+  --node-size=t2.small \
   --node-volume-size=12 \
   --target=direct \
   --topology=private \
-  --zones=eu-west-1a,eu-west-1b,eu-west-1c \
+  --zones=eu-west-1a \
   --ssh-public-key=~/.ssh/id_rsa.pub \
   --name=$NAME \
   --state=$KOPS_STATE_STORE \
