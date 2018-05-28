@@ -37,4 +37,12 @@ Ejecutar estas líneas para otorgar autorización a Helm
 
 ## Vamos a desplegar Dokuwiki por ejemplo
 
-`$ helm install --name my-doku --set persistence.apache.storageClass=standard,persistence.dokuwiki.storageClass=standard stable/dokuwiki`
+`$ helm install --name my-doku stable/dokuwiki`
+
+Para acceder al servicio observamos el valor de `LoadBalancer Ingress` cuando ejecutamos:
+
+`$ kubectl describe service/my-doku`
+
+## Cuando hayamos acabado
+
+`$ helm delete my-doku`
