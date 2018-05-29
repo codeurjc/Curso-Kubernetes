@@ -42,3 +42,18 @@
 
 `$ kubectl delete -f app-secret.yaml -f mysql-deployment-secret-pvc.yaml -f mysql-secret.yaml`
 
+## Chart para desplegar con Helm
+
+Descargamos el repo:
+
+`$ git clone https://github.com/codeurjc/Curso-Kubernetes`
+
+Entramos al directorio de trabajo
+
+`$ cd Curso-Kubernetes/ejemplo4`
+
+Y ejecutamos
+
+`$ helm install --name java-db ./java-bd`
+
+Se siguen las indicaciones en pantalla que están preparadas para mostrar la URL a la que te tienes que conectar.
