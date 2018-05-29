@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "java-bd.fullname" . }}
+  labels:
+    app: {{ template "java-bd.name" . }}
+    chart: {{ template "java-bd.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "java-bd.name" . }}
+    release: {{ .Release.Name }}
