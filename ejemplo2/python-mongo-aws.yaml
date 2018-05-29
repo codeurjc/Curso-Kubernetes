@@ -16,7 +16,7 @@ spec:
         app: python-mongo
     spec:
       containers:
-      - name: webgatos
+      - name: python-mongo
         image: codeurjc/python-mongo
         ports:
         - containerPort: 5000

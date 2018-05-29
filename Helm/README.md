@@ -46,3 +46,11 @@ Para acceder al servicio observamos el valor de `LoadBalancer Ingress` cuando ej
 ## Cuando hayamos acabado
 
 `$ helm delete my-wiki`
+
+## Check
+
+https://medium.com/@amimahloof/how-to-setup-helm-and-tiller-with-rbac-and-namespaces-34bf27f7d3c3
+
+# Alternative
+
+`$ kubectl create -f ServiceAccount-tiller-clusterrolebinding.yaml`

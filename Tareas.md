@@ -84,7 +84,7 @@ kops create cluster \
   --master-zones=eu-west-1a \
   --network-cidr=10.230.0.0/16 \
   --networking=calico \
-  --node-count=3 \
+  --node-count=1 \
   --node-size=t2.small \
   --node-volume-size=12 \
   --target=direct \

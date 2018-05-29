@@ -9,6 +9,17 @@ spec:
     app: mysql
   clusterIP: None
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1 
 kind: Deployment
 metadata:
@@ -35,4 +46,10 @@ spec:
         ports:
         - containerPort: 3306
           name: mysql
-        
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
