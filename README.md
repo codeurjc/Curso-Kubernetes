@@ -59,7 +59,13 @@ Para usar este ejemplo en **minikube** seguimos estos pasos (suponemos dispones 
 
 	1.2 Crear el StatefulSet
 
-	`$ kubectl apply -f mongodb-service.yaml`
+	> Sin persistencia de los datos de la base de datos
+
+	`$ kubectl apply -f mongodb-service-without-pvc.yaml`
+
+	> Con persistencia de los datos de la base de datos
+
+	`$ kubectl apply -f mongodb-service-with-pvc.yaml`
 
 Esperar hasta que las 3 replicas aparezcan como **running**
 
@@ -94,6 +100,12 @@ $ kubectl exec mongod-0 -c mongod-container -- mongo --eval 'db.getSiblingDB("ad
 ```
 
 Esta password está también definida en nuestra aplicación y se la pasamos por variable de entorno.
+
+Este comando lo ejecutamos en el pod que es PRIMARY del cluster. Si obtienes un error 
+
+`Error: couldn't add user: not master :`
+
+Significa que no estás en el PRIMARY. Consulta la salida en la que hemos visto la lista de miembros del cluster para conectar al que es PRIMARY.
 
 5. Desplegar la aplicación. Si no hemos cambiado la contraseña anterior podemos lanzarlo directamente
 
