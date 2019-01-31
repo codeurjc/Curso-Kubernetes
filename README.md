@@ -1,7 +1,7 @@
 # Curso-Kubernetes
 
 * Ejemplo 1: Web gatos Python sin BBDD
-* Ejemplo 2: Web anuncios Python con Mongo
+* Ejemplo 2: Web anuncios Python con Mongo y Java con MySQL
 * Ejemplo 3: Web número Spring con PostgreSQL
 
 ## Ejemplo 1
@@ -45,6 +45,28 @@ Esto nos abrirá el browser para que podamos ver la aplicación corriendo.
 ## Ejemplo 2
 
 Para usar este ejemplo en **minikube** seguimos estos pasos (suponemos dispones de un minikube corriendo):
+
+### Java con MySQL
+
+Este ejemplo es la versión fácil de la aplicación ya que usamos _Development_. Lo ideal con Bases de datos es usar _StatefulSets_ como veremos en el siguiente ejemplo.
+
+Para desplegar esta aplicación simplemente:
+
+> Sin persistencia para la base de datos:
+
+`$ kubectl create -f mysql-service-without-pvc.yaml`
+
+> Con persistencia para la base de datos:
+
+`$ mysql-service-without-pvc.yaml`
+
+Y luego la aplicación:
+
+`$ java-mysql-minikube.yaml`
+
+### Python con MongoDB
+
+Este ejemplo es de nivel más avanzado ya que hace uso de _Statefulsets_ para crear la Base de datos.
 
 1. Crear el background Mongo
 
