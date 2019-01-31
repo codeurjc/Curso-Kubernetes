@@ -71,3 +71,7 @@ spec:
               memory: 200Mi
           ports:
             - containerPort: 27017
+          volumeMounts:
+            - name: secrets-volume
+              readOnly: true
+              mountPath: /etc/secrets-volume
