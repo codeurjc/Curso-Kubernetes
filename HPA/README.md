@@ -56,4 +56,5 @@ También podemos ver en Grafana como se incrementa la carga al hacer las pruebas
 `$ minikube addons open heapster`
 
 Y nos situamos en el _Dashboard_ **PODS** y buscamos nuestro pod original. Veremos que está ocioso y podremos comprobar como sube la carga conforme hacemos la prueba.
-Directorio: 
+
+Referencia: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
