@@ -2,28 +2,38 @@
 apiVersion: apps/v1 
 kind: Deployment
 metadata:
-  name: deploy-cpu-test
+  name: php-apache
   labels:
-    app: "cpu-test"
+    app: php-apache
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: "cpu-test"
+      app: php-apache
   replicas: 1 
   template: 
     metadata:
       labels:
-        app: "cpu-test"
+        app: php-apache
     spec:
       containers:
-      - name: ubuntu
-        image: ubuntu:16.04
-        command: ["/bin/dd"]
-        args: ["if=/dev/zero", "of=/dev/null"]
+      - name: hpa-example
+        image: k8s.gcr.io/hpa-example
         resources:
           limits:
-            cpu: "1"
+            cpu: 200m
+            memory: 128Mi
           requests:
-            cpu: "0.5"
+            cpu: 100m
+            memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-apache
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: php-apache
