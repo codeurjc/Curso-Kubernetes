@@ -4,7 +4,7 @@
 
 Vamos a desplegar dos aplicaciones en Minikube y las vamos a servir bajo el mismo DNS cambiando el contexto en el que servimos cada una.
 
-1. Comprobar que Minikube tiene habilitado el addons ingress
+### 1. Comprobar que Minikube tiene habilitado el addons ingress
 
 Podemos verlo ejecutando:
 
@@ -35,7 +35,7 @@ En caso contrario lo habilitamos:
 
 `minikube addons enable ingress`
 
-2. Crear un certificado TLS
+### 2. Crear un certificado TLS
 
 Aunque es un certificado autofirmado, es buena práctica usar certificados en nuestros servicios. 
 
@@ -64,7 +64,7 @@ default-token-x24ks       kubernetes.io/service-account-token   3      6d1h
 curso-minikube-secret     kubernetes.io/tls                     2      6h
 ```
 
-3. Desplegamos las aplicaciones
+### 3. Desplegamos las aplicaciones
 
 Para la web de gatos:
 
@@ -79,7 +79,7 @@ kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/ma
 kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo2/java-mysql-minikube.yaml
 ```
 
-4. Configurar el Ingress
+### 4. Configurar el Ingress
 
 Para acceder a los servicios creamos un Ingress con esta forma:
 
@@ -122,7 +122,7 @@ Creamos el Ingress:
 
 `kubectl apply -f ingress.yaml`
 
-5. Accediendo al servicio
+### 5. Accediendo al servicio
 
 Dado que tenemos que usar un DNS vamos a configurar nuestro sistema para que resuelva correctamente, para ello hacemos lo siguiente:
 
