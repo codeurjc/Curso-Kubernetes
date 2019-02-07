@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: java
-        image: codeurjc/java-webapp-bbdd
+        image: codeurjc/java-webapp-bbdd:v3
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: pass
