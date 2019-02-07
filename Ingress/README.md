@@ -114,9 +114,9 @@ En la sección de _Metadata_ además del nombre establecemos el tipo de ingress 
 
 A continuación la sección _tls_ donde definimos el nombre del host junto con el Secret que hemos creado para que el servicio funcione por SSL.
 
-Vemos ahora las reglas. Definimos el path en _/anuncios/_ para la web de anuncios, el motivo que acabe en _/_ es para que las rutas relativas encuentren los enlaces. Así para este _path_ configuramos el servicio y el puerto del servicio.
+Vemos ahora las reglas. Definimos el path en _/anuncios/_ para la web de anuncios, el motivo que acabe en _/_ es para que las rutas relativas encuentren los enlaces. Después, para este _path_ configuramos el servicio por el nombre y el puerto del servicio.
 
-Igualmente con *gatos* pero como no tiene ningún enlace no hace falta la barra final.
+Igualmente con _gatos_ pero como no tiene ningún enlace no hace falta la barra final.
 
 Creamos el Ingress:
 
