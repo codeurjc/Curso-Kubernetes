@@ -68,7 +68,9 @@ curso-minikube-secret     kubernetes.io/tls                     2      6h
 
 Para la web de gatos:
 
-`kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo1/webgatos-minikube.yaml`
+```
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo1/webgatos-minikube.yaml
+```
 
 Para la web de los anuncios:
 
