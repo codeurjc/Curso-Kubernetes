@@ -128,7 +128,10 @@ Dado que tenemos que usar un DNS vamos a configurar nuestro sistema para que res
 
 **En Linux**
 
-`sudo echo $(minikube ip) curso.minikube.io >> /etc/hosts`
+``` 
+export MINIKUBE_IP=$(minikube ip)
+echo $MINIKUBE_IP curso.minikube.io | sudo tee --append /etc/hosts >/dev/null
+```
 
 **En Mac**
 
