@@ -30,5 +30,7 @@ Para conectarnos a la máquina virtual que corre Minikube hacemos:
 
 ## Ejecuta esta línea
 
+Con este comando descargaras las imágenes Docker dentro de la máquina virtual que corre Minikube.
+
 `curl -s https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/docker-pull.sh | bash`
 
