@@ -1,0 +1,11 @@
+docker pull jocatalin/kubernetes-bootcamp:v1
+docker pull jocatalin/kubernetes-bootcamp:v2
+docker pull codeurjc/webgatos
+docker pull byrnedo/alpine-curl
+docker pull gcr.io/google-samples/node-hello:1.0
+docker pull mysql:5.6
+docker pull codeurjc/java-webapp-bbdd:v2
+docker pull k8s.gcr.io/test-webserver
+docker pull nginx
+docker pull k8s.gcr.io/hpa-example
+docker pull busybox
