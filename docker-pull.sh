@@ -1,6 +1,6 @@
 docker pull jocatalin/kubernetes-bootcamp:v1
 docker pull jocatalin/kubernetes-bootcamp:v2
-docker pull codeurjc/webgatos
+docker pull codeurjc/webgatos:v1
 docker pull byrnedo/alpine-curl
 docker pull gcr.io/google-samples/node-hello:1.0
 docker pull mysql:5.6
