@@ -9,3 +9,5 @@ docker pull codeurjc/test-webserver:v1
 docker pull nginx:1.15
 docker pull codeurjc/hpa-example:v1
 docker pull busybox:1.30
+docker pull bitnami/drupal:8.6.9
+docker pull bitnami/mariadb:10.1.37
