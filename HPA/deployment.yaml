@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: hpa-example
-        image: k8s.gcr.io/hpa-example
+        image: codeurjc/hpa-example:v1
         resources:
           limits:
             cpu: 200m

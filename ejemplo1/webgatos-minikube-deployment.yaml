@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: webgatos
-        image: codeurjc/webgatos
+        image: codeurjc/webgatos:v1
         ports:
         - containerPort: 5000
