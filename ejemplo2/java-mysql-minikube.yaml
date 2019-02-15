@@ -40,4 +40,4 @@ spec:
       name: java-webapp-db
   selector:
     app: java-webapp-db
-  type: NodePort
+  type: LoadBalancer
