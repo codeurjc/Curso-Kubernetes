@@ -26,7 +26,7 @@ Con este comando descargaras las imágenes Docker dentro de la máquina virtual 
 
 Cerramos la conexión ssh con la máquina virtual de minikube
 
-`$ minikube ssh` 
+`$ exit` 
 
 ## Probar que funciona correctamente
 
@@ -36,4 +36,10 @@ Mostrar la consola visual de Kubernetes
 
 Después de unos segundos, se debería abrir un navegador web automáticamente con un dashboard de Kubernetes similar a [este](https://labs.consol.de/assets/2017-02-10-minikube/kubernetes_dashboard.png).
 
+## Parar la máquina virtual
 
+Ejecutamos el comando.
+
+`$ minikube stop` 
+
+Si abrimos el interfaz gráfico de Virtualbox podemos ver la máquina virtual con minikube.
