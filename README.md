@@ -58,11 +58,11 @@ Para desplegar esta aplicación simplemente:
 
 > Con persistencia para la base de datos:
 
-`$ mysql-service-without-pvc.yaml`
+`$ kubectl create -f mysql-service-with-pvc.yaml`
 
 Y luego la aplicación:
 
-`$ java-mysql-minikube.yaml`
+`$ kubectl create -f java-mysql-minikube.yaml`
 
 ### Python con MongoDB
 
