@@ -34,13 +34,13 @@ webgatos-service   NodePort    10.100.93.166   <none>        5000:32615/TCP   11
 
 4. Accedemos al servicio
 
-`minikube service webgatos-service`
+`$ minikube service webgatos-service`
 
 Esto nos abrirá el browser para que podamos ver la aplicación corriendo.
 
 5. Borramos la aplicación al terminar
 
-`kubectl delete -f webgatos-minikube.yaml`
+`$ kubectl delete -f webgatos-minikube.yaml`
 
 ## Ejemplo 2
 
@@ -58,11 +58,11 @@ Para desplegar esta aplicación simplemente:
 
 > Con persistencia para la base de datos:
 
-`$ mysql-service-without-pvc.yaml`
+`$ kubectl create -f mysql-service-with-pvc.yaml`
 
 Y luego la aplicación:
 
-`$ java-mysql-minikube.yaml`
+`$ kubectl create -f java-mysql-minikube.yaml`
 
 ### Python con MongoDB
 
