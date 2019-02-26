@@ -1,0 +1,34 @@
+Soluciones y Ejemplos:
+
+Ejemplo 1:
+kubectl create deployment kubernetes-bootcamp --image=jocatalin/kubernetes-bootcamp:v1
+
+Ejemplo 2:
+kubectl run --generator=run-pod/v1 -it curl --image=byrnedo/alpine-curl:0.1.7 --command -- /bin/sh
+
+Ejemplo 3:
+kubectl run kubernetes-bootcamp --image=jocatalin/kubernetes-bootcamp:v1 --port=8080 --replicas=2
+
+Ejemplo 4:
+kubectl set image deployment/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v2
+
+Ejemplo 5:
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/Volumenes/pod-pvc.yaml
+
+Ejercicio 3:
+
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo2/mysql-service-without-pvc.yaml
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo2/java-mysql-minikube.yaml
+
+Ejercicio 4:
+
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo2/mysql-service-with-pvc.yaml
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo2/java-mysql-minikube.yaml
+
+Ejercicio 5:
+
+https://github.com/codeurjc/Curso-Kubernetes/tree/master/ejemplo4/java-bd
+
+Si clonamos el repo desde el directorio superior hacer 
+
+$ helm install --name java-bd ./java-bd
