@@ -83,6 +83,8 @@ kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/ma
 
 Para acceder a los servicios creamos un Ingress con esta forma:
 
+**Con TLS**
+
 ```
 apiVersion: extensions/v1beta1  
 kind: Ingress  
@@ -110,9 +112,34 @@ spec:
           servicePort: 5000
 ```
 
+**Sin TLS**
+
+```
+apiVersion: extensions/v1beta1  
+kind: Ingress  
+metadata:  
+  name: codeurjc-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+spec:  
+  rules:
+  - host: curso.minikube.io
+    http:
+      paths:
+      - path: /anuncios/
+        backend:
+          serviceName: java-webapp-db-service
+          servicePort: 8080
+      - path: /gatos
+        backend:
+          serviceName: webgatos-service
+          servicePort: 5000
+```
+
 En la sección de _Metadata_ además del nombre establecemos el tipo de ingress como _nginx_. En otros casos se usar _traefik_. El _rewrite-target_ es la URI de destino donde el tráfico debe ser redirigido. Como nuestras aplicaciones trabajan en / es a donde debemos redirigir el tráfico.
 
-A continuación la sección _tls_ donde definimos el nombre del host junto con el Secret que hemos creado para que el servicio funcione por SSL.
+A continuación la sección _tls_ solo si hemos decidido usar TLS, donde definimos el nombre del host junto con el Secret que hemos creado para que el servicio funcione por SSL.
 
 Vemos ahora las reglas. Definimos el path en _/anuncios/_ para la web de anuncios, el motivo que acabe en _/_ es para que las rutas relativas encuentren los enlaces. Después, para este _path_ configuramos el servicio por el nombre y el puerto del servicio.
 
