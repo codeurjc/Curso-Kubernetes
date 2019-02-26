@@ -35,7 +35,7 @@ En caso contrario lo habilitamos:
 
 `minikube addons enable ingress`
 
-### 2. Crear un certificado TLS
+### 2. Crear un certificado TLS (Opcional)
 
 Aunque es un certificado autofirmado, es buena práctica usar certificados en nuestros servicios. 
 
@@ -85,6 +85,8 @@ Para acceder a los servicios creamos un Ingress con esta forma:
 
 **Con TLS**
 
+`ingress-tls.yaml`
+
 ```
 apiVersion: extensions/v1beta1  
 kind: Ingress  
@@ -113,6 +115,8 @@ spec:
 ```
 
 **Sin TLS**
+
+`ingress-tls.yaml`
 
 ```
 apiVersion: extensions/v1beta1  
