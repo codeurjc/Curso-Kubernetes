@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: codeurjc/java-webapp-bbdd:v2
+  repository: codeurjc/java-webapp-bbdd
   tag: v2
   pullPolicy: Always
 
