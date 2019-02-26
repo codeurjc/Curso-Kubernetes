@@ -116,7 +116,7 @@ spec:
 
 **Sin TLS**
 
-`ingress-tls.yaml`
+`ingress.yaml`
 
 ```
 apiVersion: extensions/v1beta1  
