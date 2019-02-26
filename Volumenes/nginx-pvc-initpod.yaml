@@ -27,7 +27,7 @@ spec:
           mountPath: /usr/share/nginx/html
       initContainers:
       - name: init-myservice
-        image: nordri/nordri-dev-tools
+        image: bash
         command: ['bash', '-c', 'if [ ! -f "/workdir/index.html" ]; then echo Hello from minikube at $(date) > /workdir/index.html; fi']
         volumeMounts:
         - name: nginx-storage
