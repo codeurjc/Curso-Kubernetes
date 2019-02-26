@@ -147,7 +147,13 @@ Igualmente con _gatos_ pero como no tiene ningún enlace no hace falta la barra 
 
 Creamos el Ingress:
 
+**Sin TLS**
+
 `kubectl apply -f ingress.yaml`
+
+**Con TLS**
+
+`kubectl apply -f ingress-tls.yaml`
 
 ### 5. Accediendo al servicio
 
