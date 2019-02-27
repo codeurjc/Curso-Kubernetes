@@ -43,3 +43,10 @@ Ejecutamos el comando.
 `$ minikube stop` 
 
 Si abrimos el interfaz gráfico de Virtualbox podemos ver la máquina virtual con minikube.
+
+## Descargar el binario de Helm
+
+Descarga desde [aquí](https://github.com/helm/helm/releases) el binario correspondiente a tu arquitectura. Observa de bajarte un versión estable, que son las que aparecen con una etiqueta verde a la izquierda que dice _latest release_. Hay versiones para Linux, Windows y Mac.
+
+Las instrucciones de instalación puedes encotrarlas [aquí](https://helm.sh/docs/using_helm/#installing-helm)
+
