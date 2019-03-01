@@ -40,3 +40,24 @@ Podemos ver que los cambios se han difundido:
 `$ kubectl create -f .`
 
 Esto crea un LB abierto en el puerto 5601 para Kibana donde podemos ir a ver lo que está ocurriendo en el cluster.
+
+# GKE
+
+Necesitamos ser administradores del cluster cuando desplegamos ES para poder acceder a los metadatos de los pods. Para ello ejecutamos:
+
+`kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=TU_USUARIO`
+
+Si no hacemos esto podemos encontrarnos con el siguiente error:
+
+```
+Error from server (Forbidden): error when creating "es-statefulset.yaml": clusterroles.rbac.authorization.k8s.io "elasticsearch-logging" is forbidden: attempt to grant extra privileges: [{[get] [] [services] [] []} {[get] [] [namespaces] [] []} {[get] [] [endpoints] [] []}] user=&{TU_USUARIO  [system:authenticated] map[user-assertion.cloud.google.com:[APTNk9RXqwjWri5G+WUbN7wEeKbhY2JEIB5rNQ5bkJU3toWQf+ozoORUUkTjxIL7IWl9OnB/opR1JUKQ3m1ltWNy+vL4bkDNO7JP6mJlTcpebweq3w7xdtPzmDFN17y18KqmPNAnh8xnZm/Gs32CFnw51PEX2huvSQyjCHiKWW2+i90SucshvFH2V6VsCWE6pcMQRNLLnWb1hLbisDhHy3g+rQbivC3O+JE=]]} ownerrules=[{[create] [authorization.k8s.io] [selfsubjectaccessreviews selfsubjectrulesreviews] [] []} {[get] [] [] [] [/api /api/* /apis /apis/* /healthz /openapi /openapi/* /swagger-2.0.0.pb-v1 /swagger.json /swaggerapi /swaggerapi/* /version /version/]}] ruleResolutionErrors=[]
+```
+
+Para etiquetar los nodos en GKE hacer:
+
+```
+$ for i in $(kubectl get node | cut -d" " -f1 | grep internal) 
+do 
+  kubectl label nodes ${i} beta.kubernetes.io/fluentd-ds-ready=true 
+done
+```

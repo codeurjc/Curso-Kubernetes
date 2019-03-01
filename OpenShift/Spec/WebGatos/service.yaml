@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: webgatos
+  name: webgatos
+  namespace: curso-contenedores
+spec:
+  ports:
+    - name: webgatos-port
+      port: 5000
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    name: webgatos
+  type: ClusterIP
