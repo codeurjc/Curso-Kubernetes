@@ -1,0 +1,29 @@
+kind: DeploymentConfig
+apiVersion: v1
+metadata:
+  name: webgatos
+spec:
+  template: 
+    metadata:
+      labels:
+        name: webgatos
+    spec:
+      containers:
+        - name: gatos-container
+          image: docker-registry.default.svc:5000/curso-contenedores/webgatos
+          ports:
+            - containerPort: 5000
+              protocol: TCP
+  replicas: 1 
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange 
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - gatos-container
+        from:
+          kind: ImageStreamTag
+          name: webgatos:latest
+  strategy: 
+    type: Rolling

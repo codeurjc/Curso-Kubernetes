@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-webapp-db
+  labels:
+    app: java-webapp-db
+spec:
+  selector:
+    matchLabels:
+      app: java-webapp-db
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: java-webapp-db
+      labels:
+        app: java-webapp-db
+    spec:
+      containers:
+      - name: java
+        image: codeurjc/java-webapp-bbdd:v2
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: pass
+          - name: MYSQL_DATABASE
+            value: test
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-webapp-db
+  labels:
+    app: java-webapp-db
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: java-webapp-db
+  selector:
+    app: java-webapp-db
+  type: LoadBalancer
