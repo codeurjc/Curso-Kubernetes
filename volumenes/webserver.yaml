@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: webserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+        - name: webserver
+          image: nginx:1.15
+          ports:
+            - containerPort: 80
+              name: "http-server"
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: webserver-storage
+      volumes:
+        - name: webserver-storage
+          persistentVolumeClaim:
+            claimName: pvc-3g 
+     
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: webserver
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      name: web-port
+  selector:
+    app: webserver
+  type: NodePort

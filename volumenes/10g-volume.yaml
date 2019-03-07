@@ -1,7 +1,7 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: task-pv-volume
+  name: 10g-volume
 spec:
   storageClassName: manual
   capacity:

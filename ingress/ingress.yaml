@@ -12,7 +12,7 @@ spec:
       paths:
       - path: /anuncios/
         backend:
-          serviceName: java-webapp-db-service
+          serviceName: java-webapp-db
           servicePort: 8080
       - path: /gatos
         backend:

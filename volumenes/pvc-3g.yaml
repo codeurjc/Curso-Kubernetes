@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: task-pv-claim
+  name: pvc-3g
 spec:
   storageClassName: manual
   accessModes:
