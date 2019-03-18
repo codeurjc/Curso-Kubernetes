@@ -1,6 +1,0 @@
-#!/bin/bash
-
-sed -i "s/USERNAME/$USERNAME/" /todo/app.py
-sed -i "s/PASSWORD/$PASSWORD/" /todo/app.py
-
-python -u app.py

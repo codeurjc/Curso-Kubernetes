@@ -15,15 +15,21 @@ kubectl set image deployment/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/k
 Ejemplo 5:
 kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/Volumenes/pod-pvc.yaml
 
+Ejercicio 1:
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/Ejercicio1/webgatos-minikube-deployment.yaml
+
+Ejercicio 2:
+kubectl scale deployment webgatos-deploy --replicas=2
+
 Ejercicio 3:
 
-kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo2/mysql-service-without-pvc.yaml
-kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo2/java-mysql-minikube.yaml
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/Ejercicio3/mysql-service-without-pvc.yaml
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/Ejercicio3/java-mysql-minikube.yaml
 
 Ejercicio 4:
 
-kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo2/mysql-service-with-pvc.yaml
-kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/ejemplo2/java-mysql-minikube.yaml
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/Ejercicio4/mysql-service-with-pvc.yaml
+kubectl create -f https://raw.githubusercontent.com/codeurjc/Curso-Kubernetes/master/Ejercicio4/java-mysql-minikube.yaml
 
 Ejercicio 5:
 
