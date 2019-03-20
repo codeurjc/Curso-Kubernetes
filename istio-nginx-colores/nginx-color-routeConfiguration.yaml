@@ -1,0 +1,17 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: nginx-color
+spec:
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  host: nginx
+  subsets:
+  - name: red
+    labels:
+      version: red
+  - name: green
+    labels:
+      version: green

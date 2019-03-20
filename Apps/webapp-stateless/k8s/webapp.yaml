@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: webapp
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: codeurjc/webapp-session-cluster:0.0.6
+        env:
+        - name: DATABASE_HOST
+          value: db
+        - name: DATABASE_PORT
+          value: "3306"
+        - name: MYSQL_ROOT_PASSWORD
+          value: pass
+        - name: DATABASE_SCHEMA
+          value: webapp_db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: webapp
+  selector:
+    app: webapp
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: db
+  type: ClusterIP
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: db
+spec:
+  selector:
+    matchLabels:
+      app: db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: pass
+        - name: MYSQL_DATABASE
+          value: webapp_db
+        ports:
+        - containerPort: 3306
+          name: mysql

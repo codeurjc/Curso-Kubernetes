@@ -1,0 +1,44 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nginx-color-http-error
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - nginx-color-gateway
+  http:
+  - match:
+    - headers:
+        x-version:
+          exact: red
+    fault:
+      abort:
+        percent: 100
+        httpStatus: 503
+    route:
+    - destination:
+        host: nginx
+        port:
+          number: 80
+        subset: red
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nginx-virtualservice
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - nginx-color-gateway
+  http:
+  - match:
+    - uri: 
+       prefix: /app
+    route:
+    - destination:
+        host: nginx
+        port:
+          number: 80

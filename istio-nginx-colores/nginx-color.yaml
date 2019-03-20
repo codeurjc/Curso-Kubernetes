@@ -1,0 +1,66 @@
+# NGINX COLOR
+# Probando distintas versiones con istio
+# fede diaz @ enero 2019
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx-color
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+    protocol: TCP
+  selector:
+    app: nginx-color
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-red
+spec:
+  selector:
+    matchLabels:
+      app: nginx-color
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-color
+        version: red
+    spec:
+      containers:
+      - name: nginx-red
+        image: nordri/nginx:red
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-green
+spec:
+  selector:
+    matchLabels:
+      app: nginx-color
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-color
+        version: green
+    spec:
+      containers:
+      - name: nginx-green
+        image: nordri/nginx:green
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

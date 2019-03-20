@@ -1,0 +1,77 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: gremlin
+  namespace: default
+  labels:
+    k8s-app: gremlin
+    version: v1
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: gremlin
+        version: v1
+    spec:
+      # If you want to enable host-level process-killing, add this flag:
+      #hostPID: true
+      # If you want to enable host-level network attacks, add this flag:
+      #hostNetwork: true
+      containers:
+      - name: gremlin
+        image: gremlin/gremlin
+        args: [ "daemon" ]
+        imagePullPolicy: Always
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+              - SYS_BOOT
+              - SYS_TIME
+              - KILL
+        env:
+          - name: GREMLIN_TEAM_ID
+            value: b5582f6c-0445-5933-a919-5a7d24775937
+          - name: GREMLIN_TEAM_PRIVATE_KEY_OR_FILE
+            valueFrom:
+              secretKeyRef:
+                name: gremlin-team-cert
+                key: gremlin.key
+          - name: GREMLIN_TEAM_CERTIFICATE_OR_FILE
+            valueFrom:
+              secretKeyRef:
+                name: gremlin-team-cert
+                key: gremlin.crt
+          - name: GREMLIN_IDENTIFIER
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+        volumeMounts:
+          - name: docker-sock
+            mountPath: /var/run/docker.sock
+          - name: gremlin-state
+            mountPath: /var/lib/gremlin
+          - name: gremlin-logs
+            mountPath: /var/log/gremlin
+          - name: shutdown-trigger
+            mountPath: /sysrq
+      volumes:
+        # Gremlin uses the Docker socket to discover eligible containers to attack,
+        # and to launch Gremlin sidecar containers
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        # The Gremlin daemon communicates with Gremlin sidecars via its state directory.
+        # This should be shared with the Kubernetes host
+        - name: gremlin-state
+          hostPath:
+            path: /var/lib/gremlin
+        # The Gremlin daemon forwards logs from the Gremlin sidecars to the Gremlin control plane
+        # These logs should be shared with the host
+        - name: gremlin-logs
+          hostPath:
+            path: /var/log/gremlin
+        # If you want to run shutdown attacks on the host, the Gremlin Daemon requires a /proc/sysrq-trigger:/sysrq mount
+        - name: shutdown-trigger
+          hostPath:
+            path: /proc/sysrq-trigger
