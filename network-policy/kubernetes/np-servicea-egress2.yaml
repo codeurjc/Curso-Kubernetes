@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: servicea-external-egress2
+spec:
+  podSelector:
+    matchLabels:
+      app: servicea
+  egress:
+    # allow connection to www.googleapis.com > 216.58.201.170
+    # Note that DNS IP can change. Egress can not be configured with host names
+  - to:
+    - ipBlock:
+        cidr: 216.58.201.170/32
+    ports:
+    - port: 443
+      protocol: TCP
+  - ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+
+

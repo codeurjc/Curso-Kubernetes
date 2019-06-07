@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviceb
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: serviceb
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: serviceb
+    spec:
+      containers:
+      - name: serviceb
+        image: codeurjc/np-serviceb:latest
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: Always
