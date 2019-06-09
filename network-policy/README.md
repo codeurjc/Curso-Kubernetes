@@ -8,7 +8,7 @@ Los servicios son:
 * ServiceA es el frontal y atiende peticiones del exterior
 * ServiceB es un servicio interno y no debería aceptar peticiones del exterior
 
-## Construcción de contenedores
+### Construcción de contenedores
 
 ```
 $ docker build -t=codeurjc/np-servicea servicea/.
@@ -33,7 +33,7 @@ $ docker push codeurjc/np-servicea
 $ docker push codeurjc/np-serviceb
 ```
 
-## Despliegue Kubernetes
+### Despliegue Kubernetes
 
 Y las podemos desplegar en minikube:
 
@@ -51,7 +51,7 @@ $ SA_PORT=$(kubectl get service servicea-service --output='jsonpath={.spec.ports
 $ SB_PORT=$(kubectl get service serviceb-service --output='jsonpath={.spec.ports[0].nodePort}')
 ```
 
-## Verificación servicios
+### Verificación comunicación de servicios
 
 Usamos los servicios:
 
@@ -92,6 +92,8 @@ $ curl http://$HOST:$SB_PORT/externalvalue
 ```
 
 ## Test automático
+
+Se ha creado un script de bash que realiza todas estas peticiones y verifica si el resultado demuestra que hay conectividad o no.
 
 ```
 $ ./test.sh
@@ -392,3 +394,11 @@ ServiceA to ServiceB: OK
 ServiceB External Egress (direct): FAIL
 ServiceB External Egress (through ServiceA): OK
 ```
+
+## Más información
+
+* [Página oficial de Kubernetes sobre Network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+* [Otra página oficial sobre las Network policies](https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/)
+* [Ejemplos de Network policies típicas](https://github.com/ahmetb/kubernetes-network-policy-recipes/)
+* [Más ejemplos de Network policies](http://docs.galacticfog.com/security/network-policies/kube-network-policies/)
+* [Instalación de cilium en Minikube](https://cilium.readthedocs.io/en/stable/gettingstarted/minikube/)
