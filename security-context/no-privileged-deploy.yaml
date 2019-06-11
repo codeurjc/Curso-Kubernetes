@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psp-demo
+spec:
+  selector:
+    matchLabels:
+      app: psp-demo
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: psp-demo
+    spec:
+      containers:
+      - name: psp-demo
+        image: busybox
+        command: [ "sh", "-c", "sleep 1h" ]
+      serviceAccountName: app-sa
+      
