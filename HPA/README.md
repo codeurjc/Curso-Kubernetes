@@ -57,4 +57,6 @@ También podemos ver en Grafana como se incrementa la carga al hacer las pruebas
 
 Y nos situamos en el _Dashboard_ **PODS** y buscamos nuestro pod original. Veremos que está ocioso y podremos comprobar como sube la carga conforme hacemos la prueba.
 
-Referencia: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
+Referencias: 
+- https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
+- https://www.digitalocean.com/community/tutorials/how-to-autoscale-your-workloads-on-digitalocean-kubernetes
