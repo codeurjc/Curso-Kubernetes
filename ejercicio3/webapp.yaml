@@ -1,19 +1,19 @@
-apiVersion: apps/v1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db
+  name: webapp
 spec:
   selector:
     matchLabels:
-      app: db
+      app: webapp
   template:
     metadata:
       labels:
-        app: db
+        app: webapp
     spec:
       containers:
-      - name: mysql
-        image: mysql:5.6
+      - name: java
+        image: codeurjc/java-webapp-bbdd:v2
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: pass
@@ -23,10 +23,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: db
+  name: webapp
+  labels:
+    app: webapp
 spec:
   ports:
-  - port: 3306
+  - port: 8080
   selector:
-    app: db
-  type: ClusterIP
+    app: webapp
+  type: LoadBalancer
