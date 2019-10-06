@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicea
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: servicea
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: servicea
+    spec:
+      containers:
+      - name: servicea
+        image: codeurjc/np-servicea
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servicea-service
+  labels:
+    app: servicea
+spec:
+  ports:
+    - port: 5000
+      protocol: TCP
+      name: servicea-port
+  selector:
+    app: servicea
+  type: NodePort

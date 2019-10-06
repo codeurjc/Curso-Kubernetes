@@ -1,0 +1,43 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "mysql.fullname" . }}
+  labels:
+    app: {{ template "mysql.name" . }}
+    chart: {{ template "mysql.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "mysql.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "mysql.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: {{ .Values.mysql_root_password }}
+        - name: MYSQL_DATABASE
+          value: {{ .Values.mysql_database }}
+        ports:
+        - name: mysql
+          protocol: TCP
+          containerPort: 3306
+{{- if .Values.persistence.enabled }}
+        volumeMounts:
+        - name: {{ template "mysql.name" . }}-data
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: {{ template "mysql.name" . }}-data
+        persistentVolumeClaim:
+          claimName: {{ template "mysql.name" . }}-pvc
+{{- end }}

@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: servicea2serviceb
+spec:
+  podSelector:
+    matchLabels:
+      app: servicea
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: serviceb
+    ports:
+    - port: 5000
+      protocol: TCP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: serviceb2servicea
+spec:
+  podSelector:
+    matchLabels:
+      app: serviceb
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: servicea
+      ports:
+      - port: 5000
+        protocol: TCP  
